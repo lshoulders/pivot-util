@@ -15,12 +15,12 @@ function uninstall {
 function install {
     param ($app_name)
 
-    $curr_user = whoami.exe | Split-Path -Leaf
+    # $curr_user = whoami.exe | Split-Path -Leaf
 
-    if ($curr_user.ToLower() -eq "admin") {
-        Write-Host "Updating the manifest for $app_name"
-        wingetcreate update $app_name
-    }
+    # if ($curr_user.ToLower() -eq "admin") {
+    #     Write-Host "Updating the manifest for $app_name"
+    #     wingetcreate update $app_name
+    # }
     
     Write-Host "Searching for $app_name"
     winget install -e --accept-package-agreements $app_name
