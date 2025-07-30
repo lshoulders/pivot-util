@@ -2,6 +2,10 @@ param (
     [string]$site
 )
 
+if(($site.ToLower() -eq "rs") -or ($site.ToLower() -eq "riverside") ) {
+    exit 0;
+}
+
 if(($site.ToLower() -eq "nb") -or ($site.ToLower() -eq "north bay") -or ($site.ToLower() -eq "northbay")) {
     Write-Host 
     Write-Host "Setting up North Bay Printers" -BackgroundColor "blue"
