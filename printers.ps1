@@ -63,3 +63,23 @@ if(($site.ToLower() -eq "nv") -or ($site.ToLower() -eq "north valley") -or ($sit
     Add-PrinterPort -Name $km_printer_name -PrinterHostAddress $km_printer_ip
     Add-Printer -Name $km_port_name -PortName $km_printer_name -DriverName $k358ci_driver
 }
+
+if(($site.ToLower() -eq "SD") -or ($site.ToLower() -eq "san diego") -or ($site.ToLower() -eq "northvalley")) {
+    Write-Host 
+    Write-Host "Setting up San Diego Printers" -BackgroundColor "blue"
+    $inf_file="..\drivers\cannon\CNS30MA64.INF"
+    pnputil.exe /add-driver $inf_file
+
+    #Cannon printer
+    $driver_name = "Canon Generic Plus PS3"
+    Add-PrinterDriver -Name $driver_name
+
+    Write-Host "Adding San Diego printer" -BackgroundColor "green"
+    $cannon_printer_ip = "192.168.128.45"
+    $cannon_port_name = "IP_" + $cannon_printer_ip
+    $cannon_printer_name = "Meeting Room San Diego"
+    Remove-Printer -ErrorAction SilentlyContinue -Name $cannon_printer_name
+    Remove-PrinterPort -ErrorAction SilentlyContinue -Name $cannon_port_name
+    Add-PrinterPort -Name $cannon_port_name -PrinterHostAddress $cannon_printer_ip
+    Add-Printer -Name $cannon_printer_name -PortName $cannon_port_name -DriverName $driver_name
+}
