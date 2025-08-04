@@ -169,7 +169,7 @@ Remove-Item -ErrorAction SilentlyContinue "$Home\Desktop\$chrome_lnk"
 
 $curr_user = whoami.exe | Split-Path -Leaf
 if ($curr_user.ToLower() -eq "admin"){
-
+    Set-TimeZone "Pacific Standard Time"
 
     Remove-LocalUser -ErrorAction SilentlyContinue -Name "User"
     Remove-LocalUser -ErrorAction SilentlyContinue -Name "user"
