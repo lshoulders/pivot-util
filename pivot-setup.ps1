@@ -185,8 +185,12 @@ if ($curr_user.ToLower() -eq "admin"){
     Set-TimeZone $timezone_pst_id
     Set-Date -Adjust $offset_curr_pst
 
+    Start-Service -Name w32Time
+    w32tm /resync /force
+
     Remove-LocalUser -ErrorAction SilentlyContinue -Name "User"
     Remove-LocalUser -ErrorAction SilentlyContinue -Name "user"
+    Remove-LocalUser -ErrorAction SilentlyContinue -Name "pivot charter"
 
     $new_pass_curr_user = get_password($curr_user)
     Set-LocalUser -Name $curr_user -Password $new_pass_curr_user
