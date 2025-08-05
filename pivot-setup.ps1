@@ -169,7 +169,21 @@ Remove-Item -ErrorAction SilentlyContinue "$Home\Desktop\$chrome_lnk"
 
 $curr_user = whoami.exe | Split-Path -Leaf
 if ($curr_user.ToLower() -eq "admin"){
-    Set-TimeZone "Pacific Standard Time"
+
+    Write-Host
+    Write-Host
+    Write-Host "Changing timezone" -ForegroundColor "yellow" -BackgroundColor "blue"
+
+    $timezone_pst_id = "Pacific Standard Time"
+    $timezone_pst = [System.TimeZOneInfo]::FindSystemTimeZoneById($timezone_pst_id)
+    $timezone_curr = [System.TimeZoneInfo]::Local
+    
+    $pst_offset = $timezone_pst.GetUtcOffset([System.DateTimeOffset]::UtcNow)
+    $curr_offset = $timezone_curr.GetUtcOffset([System.DateTimeOffset]::UtcNow)
+    $offset_curr_pst = $pst_offset - $curr_offset
+
+    Set-TimeZone $timezone_pst_id
+    Set-Date -Adjust $offset_curr_pst
 
     Remove-LocalUser -ErrorAction SilentlyContinue -Name "User"
     Remove-LocalUser -ErrorAction SilentlyContinue -Name "user"
